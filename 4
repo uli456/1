@@ -1,0 +1,56 @@
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+public class MovingImage extends Application {
+    private static final String IMAGE_URL = "https://example.com/image.png"; // Замените на реальную ссылку
+    private static final int PANE_SIZE = 400;
+    private static final int IMAGE_SIZE = 50;
+    private static final int SPEED = 2;
+
+    @Override
+    public void start(Stage primaryStage) {
+        Pane root = new Pane();
+        root.setPrefSize(PANE_SIZE, PANE_SIZE);
+
+        // Загрузка изображения (если URL недоступен, используется заглушка)
+        Image image = new Image(IMAGE_URL, IMAGE_SIZE, IMAGE_SIZE, true, true, true);
+        ImageView imageView = new ImageView(image);
+        imageView.setX(0);
+        imageView.setY(0);
+
+        root.getChildren().add(imageView);
+
+        // Анимация движения
+        Timeline timeline = new Timeline(
+            new KeyFrame(Duration.millis(16), event -> {
+                imageView.setX(imageView.getX() + SPEED);
+                imageView.setY(imageView.getY() + SPEED);
+
+                // Сброс позиции при выходе за границы
+                if (imageView.getX() > PANE_SIZE || imageView.getY() > PANE_SIZE) {
+                    imageView.setX(0);
+                    imageView.setY(0);
+                }
+            })
+        );
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+
+        Scene scene = new Scene(root);
+        primaryStage.setTitle("Движущееся изображение");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
