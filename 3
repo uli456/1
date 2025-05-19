@@ -1,0 +1,64 @@
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.*;
+import javafx.stage.Stage;
+
+public class Car extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        Pane root = new Pane();
+        
+        // Кузов (закруглённый прямоугольник)
+        Path body = new Path();
+        body.getElements().addAll(
+            new MoveTo(50, 150),
+            new QuadCurveTo(100, 50, 250, 50),
+            new QuadCurveTo(350, 50, 350, 150),
+            new LineTo(350, 200),
+            new QuadCurveTo(300, 220, 250, 220),
+            new QuadCurveTo(200, 220, 50, 200),
+            new ClosePath()
+        );
+        body.setFill(Color.RED);
+        body.setStroke(Color.BLACK);
+
+        // Колёса
+        Circle wheel1 = new Circle(150, 220, 25, Color.BLACK);
+        Circle wheel2 = new Circle(250, 220, 25, Color.BLACK);
+        Circle wheelInner1 = new Circle(150, 220, 15, Color.GRAY);
+        Circle wheelInner2 = new Circle(250, 220, 15, Color.GRAY);
+
+        // Окна
+        PathWindow window = new PathWindow();
+        window.getElements().addAll(
+            new MoveTo(150, 80),
+            new QuadCurveTo(200, 70, 250, 80),
+            new LineTo(250, 130),
+            new QuadCurveTo(200, 140, 150, 130),
+            new ClosePath()
+        );
+        window.setFill(Color.LIGHTBLUE);
+
+        // Фары
+        Circle headlight = new Circle(350, 120, 10, Color.YELLOW);
+
+        root.getChildren().addAll(body, wheel1, wheel2, wheelInner1, wheelInner2, window, headlight);
+
+        Scene scene = new Scene(root, 400, 300);
+        primaryStage.setTitle("Машинка");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    class PathWindow extends Path {
+        public PathWindow() {
+            setStroke(Color.BLACK);
+        }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
