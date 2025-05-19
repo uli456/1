@@ -1,0 +1,66 @@
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.stage.Stage;
+
+public class Snowman extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        Pane root = new Pane();
+        
+        // Тело снеговика (3 круга)
+        Circle bottomSnow = new Circle(150, 250, 60, Color.WHITE);
+        bottomSnow.setStroke(Color.BLACK);
+        
+        Circle middleSnow = new Circle(150, 170, 45, Color.WHITE);
+        middleSnow.setStroke(Color.BLACK);
+        
+        Circle headSnow = new Circle(150, 110, 30, Color.WHITE);
+        headSnow.setStroke(Color.BLACK);
+        
+        // Глаза и рот
+        Circle leftEye = new Circle(140, 100, 5, Color.BLACK);
+        Circle rightEye = new Circle(160, 100, 5, Color.BLACK);
+        Line mouth = new Line(140, 115, 160, 115);
+        mouth.setStroke(Color.BLACK);
+        
+        // Нос (морковка)
+        javafx.scene.shape.Polygon nose = new javafx.scene.shape.Polygon(
+            150, 110,
+            170, 110,
+            150, 120
+        );
+        nose.setFill(Color.ORANGE);
+        
+        // Ветки-руки
+        Line leftArm = new Line(105, 170, 60, 130);
+        leftArm.setStrokeWidth(3);
+        Line rightArm = new Line(195, 170, 240, 130);
+        rightArm.setStrokeWidth(3);
+        
+        // Шляпа
+        javafx.scene.shape.Rectangle hatBrim = new javafx.scene.shape.Rectangle(125, 80, 50, 5);
+        hatBrim.setFill(Color.BLACK);
+        javafx.scene.shape.Rectangle hatTop = new javafx.scene.shape.Rectangle(135, 50, 30, 30);
+        hatTop.setFill(Color.BLACK);
+        
+        root.getChildren().addAll(
+            bottomSnow, middleSnow, headSnow,
+            leftEye, rightEye, mouth, nose,
+            leftArm, rightArm,
+            hatBrim, hatTop
+        );
+
+        Scene scene = new Scene(root, 300, 350);
+        primaryStage.setTitle("Снеговик");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
