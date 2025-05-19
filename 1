@@ -1,0 +1,32 @@
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+
+public class TrafficLight extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        Pane root = new Pane();
+        Rectangle frame = new Rectangle(100, 50, 100, 300);
+        frame.setFill(Color.GRAY);
+        frame.setStroke(Color.BLACK);
+
+        Circle redLight = new Circle(150, 100, 40, Color.RED);
+        Circle yellowLight = new Circle(150, 200, 40, Color.YELLOW);
+        Circle greenLight = new Circle(150, 300, 40, Color.GREEN);
+
+        root.getChildren().addAll(frame, redLight, yellowLight, greenLight);
+
+        Scene scene = new Scene(root, 300, 400);
+        primaryStage.setTitle("Светофор");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
