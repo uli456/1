@@ -1,0 +1,68 @@
+import javafx.animation.*;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+public class SquareAnimation extends Application {
+    private static final String IMAGE_URL = "https://cdn-icons-png.flaticon.com/512/186/186037.png"; // иконка кота
+    private static final int PANE_SIZE = 400;
+    private static final int IMAGE_SIZE = 50;
+    private static final int SQUARE_SIZE = 300;
+    private static final int ANIMATION_DURATION = 4000; // 4 секунды на полный круг
+
+    @Override
+    public void start(Stage primaryStage) {
+        Pane root = new Pane();
+        root.setPrefSize(PANE_SIZE, PANE_SIZE);
+
+        // Загрузка изображения
+        Image image = new Image(IMAGE_URL, IMAGE_SIZE, IMAGE_SIZE, true, true);
+        ImageView imageView = new ImageView(image);
+        root.getChildren().add(imageView);
+
+        // Начальная позиция (левый верхний угол квадрата)
+        int startX = (PANE_SIZE - SQUARE_SIZE) / 2;
+        int startY = (PANE_SIZE - SQUARE_SIZE) / 2;
+
+        // Создание анимации по ключевым кадрам
+        Timeline timeline = new Timeline(
+            new KeyFrame(Duration.ZERO, 
+                new KeyValue(imageView.xProperty(), startX),
+                new KeyValue(imageView.yProperty(), startY)
+            ),
+            new KeyFrame(Duration.millis(ANIMATION_DURATION * 0.25), 
+                new KeyValue(imageView.xProperty(), startX + SQUARE_SIZE),
+                new KeyValue(imageView.yProperty(), startY)
+            ),
+            new KeyFrame(Duration.millis(ANIMATION_DURATION * 0.5), 
+                new KeyValue(imageView.xProperty(), startX + SQUARE_SIZE),
+                new KeyValue(imageView.yProperty(), startY + SQUARE_SIZE)
+            ),
+            new KeyFrame(Duration.millis(ANIMATION_DURATION * 0.75), 
+                new KeyValue(imageView.xProperty(), startX),
+                new KeyValue(imageView.yProperty(), startY + SQUARE_SIZE)
+            ),
+            new KeyFrame(Duration.millis(ANIMATION_DURATION), 
+                new KeyValue(imageView.xProperty(), startX),
+                new KeyValue(imageView.yProperty(), startY)
+            )
+        );
+
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.setInterpolator(Interpolator.LINEAR);
+        timeline.play();
+
+        Scene scene = new Scene(root);
+        primaryStage.setTitle("Движение по квадрату");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
